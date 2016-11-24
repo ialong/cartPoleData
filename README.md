@@ -1,3 +1,3 @@
 # cartPoleData
 ### Generates and visualises cartPole simulations
-simply put as a directory inside the cartPoleScenario
+simply put as a directory inside the cartPole scenario
