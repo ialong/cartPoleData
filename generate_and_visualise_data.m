@@ -11,6 +11,11 @@ plant.dt = 0.15;
 plant.ctrltype = @(t,f,f0)zoh(t,f,f0);               
 plant.ode = @dynamics;
 
+% Noise s.d.'s: 1cm, 1 degree
+% Dimensions: x position, sin(\theta), cos(\theta), cart velocity, angular velocity
+obs_noise_std = [0.01 pi/180 0.01/plant.dt pi/180/plant.dt]';
+add_noise = true;
+
 T = 100;
 x0 = [0,0,0,0];
 controls = 10*(rand(1,T-1)-0.5);
@@ -21,6 +26,9 @@ count = 2;
 for f=controls
     data(:,count) = odestep(data(:,count-1), f, plant);
     count = count + 1;
+end
+if add_noise
+    data = data + bsxfun(@times, randn(size(data)), obs_noise_std);
 end
 
 %% Plot various dimensions
