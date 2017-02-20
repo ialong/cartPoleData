@@ -13,7 +13,7 @@ plant.ode = @dynamics;
 
 % Noise s.d.'s: 1cm, 1 degree
 % Dimensions: x position, sin(\theta), cos(\theta), cart velocity, angular velocity
-obs_noise_std = [0.01 pi/180 0.01/plant.dt pi/180/plant.dt]';
+obs_noise_std = [0.01 pi/180 0.01/plant.dt pi/180/plant.dt];
 add_noise = true;
 
 T = 100;
@@ -28,7 +28,7 @@ for f=controls
     count = count + 1;
 end
 if add_noise
-    data = data + bsxfun(@times, randn(size(data)), obs_noise_std);
+    data = data + bsxfun(@times, randn(size(data)), obs_noise_std');
 end
 
 %% Plot various dimensions
