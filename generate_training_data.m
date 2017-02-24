@@ -41,10 +41,12 @@ for n=1:N
 %     if add_noise_to_theta
 %         y_n(:,2) = y_n(:,2) + randn(size(y_n,1),1)*obs_noise_std(2);
 %     end
+    y_n(:,2) = y_n(:,2) + pi/2; % correction to have 0 be the balanced pendulum
     y_n(:,5) = cos(y_n(:,2));
     y_n(:,2) = sin(y_n(:,2));
     y_n = y_n(:,[1,2,5,3,4]); 
-    y_noiseless{n} = y_n(burn_in+1:end,:);
+    y_n = y_n(burn_in+1:end,:);
+    y_noiseless{n} = y_n;
     if add_noise
         y{n} = y_n + bsxfun(@times, randn(size(y_n)), obs_noise_std);
     else
