@@ -1,13 +1,13 @@
 %% Data for plotting
 
-clear all
+%clear all
 rng(1)
 
 addpath('../')
 addpath('../../../base')
 
 plant.delay = 0.05;                 
-plant.dt = 0.15;
+plant.dt = 0.07;
 plant.ctrltype = @(t,f,f0)zoh(t,f,f0);               
 plant.ode = @dynamics;
 
