@@ -6,14 +6,14 @@ rng(1)
 addpath('../')
 addpath('../../../base')
 
-plant.delay = 0.05;                 
-plant.dt = 0.07;
+plant.delay = 0.025;                 
+plant.dt = 0.075;
 plant.ctrltype = @(t,f,f0)zoh(t,f,f0);               
 plant.ode = @dynamics;
 
 % Noise s.d.'s: 1cm, 1 degree
 % Dimensions: x position, sin(\theta), cos(\theta), cart velocity, angular velocity
-obs_noise_std = [0.01 pi/180 0.01/plant.dt pi/180/plant.dt];
+obs_noise_std = 4*[0.01 pi/180 0.01/plant.dt pi/180/plant.dt];
 add_noise = true;
 
 T = 100;
