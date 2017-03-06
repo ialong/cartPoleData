@@ -9,6 +9,10 @@ hyp2 = minimize(hyp, @gp, -100, @infGaussLik, meanfunc, covfunc, likfunc, x, y);
 
 series = 10;
 series_length = 100;
-noise_multiplier = 0;
+burn_in = 100;
 
-for 
+for noise_multiplier = 1:2:10
+
+    [data, data_position_angle, noiseless_data] = return_cartpole_data(series, series_length, burn_in, noise_multiplier);
+
+end

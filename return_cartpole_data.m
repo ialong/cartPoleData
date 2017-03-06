@@ -1,6 +1,4 @@
-%% Generate data for training
-
-%clear 
+function [data, data_position_angle, noiseless_data] = return_cartpole_data(N, series_length, burn_in, noise_multiplier)
 rng(1)
 
 addpath('../')
@@ -13,13 +11,11 @@ plant.ode = @dynamics;
 
 % Noise s.d.'s: 1cm, 1 degree
 % Dimensions: x position, sin(\theta), cos(\theta), cart velocity, angular velocity
-obs_noise_std = 4*[0.01 pi/180 pi/180 0.01/plant.dt pi/180/plant.dt]; % add noise to sin & cos independently
+obs_noise_std = noise_multiplier * [0.01 pi/180 pi/180 0.01/plant.dt pi/180/plant.dt]; % add noise to sin & cos independently
 add_noise = true;
 % add_noise_to_theta = false;
 
-N = 10;
-burn_in = 100;
-T = 100 + burn_in;
+T = series_length + burn_in;
 max_force = 5;
 x0 = [0,0,0,0];
 
@@ -59,6 +55,3 @@ y_position_angle = cellfun(@(x)({x(:,1:3)}),y);
 data = struct('y',y,'u',u);
 noiseless_data = struct('y',y_noiseless,'u',u);
 data_position_angle = struct('y',y_position_angle,'u',u);
-
-save('data_all', 'data', 'noiseless_data')
-save('data_position_angle', 'data_position_angle', 'noiseless_data')

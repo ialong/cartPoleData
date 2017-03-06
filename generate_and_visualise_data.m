@@ -1,6 +1,6 @@
 %% Data for plotting
 
-%clear all
+%clear 
 rng(1)
 
 addpath('../')
@@ -13,7 +13,7 @@ plant.ode = @dynamics;
 
 % Noise s.d.'s: 1cm, 1 degree
 % Dimensions: x position, sin(\theta), cos(\theta), cart velocity, angular velocity
-obs_noise_std = 4*[0.01 pi/180 0.01/plant.dt pi/180/plant.dt];
+obs_noise_std = 0*[0.01 pi/180 0.01/plant.dt pi/180/plant.dt];
 add_noise = true;
 
 T = 100;
@@ -46,7 +46,7 @@ fig = figure;
 M(size(data,2)) = struct('cdata',[],'colormap',[]);
 count = 1;
 data_corr = data;
-data_corr(2,:) = data_corr(2,:) + pi/2;
+data_corr(2,:) = data_corr(2,:) + pi/2; % correction to visualize 0 angle at (0,1)=(cos,sin) coordinate
 for obs = data_corr
     plot([obs(1)-3,obs(1),obs(1)+3],[0,0,0],'-o')                % cart
     axis equal
