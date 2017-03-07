@@ -34,6 +34,7 @@ for n=1:N
     y_n = zeros(T,4);
     y_n(1,:) = x0;
     count = 2;
+    clear odestep
     for f=u{n}'
         y_n(count,:) = odestep(y_n(count-1,:), f, plant);
         count = count + 1;

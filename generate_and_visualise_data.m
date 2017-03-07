@@ -23,6 +23,7 @@ data = zeros(4,T);
 data(:,1) = x0;
 
 count = 2;
+clear odestep
 for f=controls
     data(:,count) = odestep(data(:,count-1), f, plant);
     count = count + 1;

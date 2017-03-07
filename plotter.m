@@ -1,4 +1,4 @@
-load('results/noise_level_5.mat')
+load('results/noise_level_1.mat')
 
 n_test_points = size(preds(:,1),1);
 
