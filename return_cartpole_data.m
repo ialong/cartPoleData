@@ -1,5 +1,5 @@
-function [data, data_position_angle, noiseless_data] = return_cartpole_data(N, series_length, burn_in, noise_multiplier)
-rng(1)
+function [data, data_position_angle, noiseless_data] = return_cartpole_data(N, series_length, discard_first_n_steps, noise_multiplier)
+% rng(1)
 
 addpath('../')
 addpath('../../../base')
@@ -15,7 +15,7 @@ obs_noise_std = noise_multiplier * [0.01 pi/180 pi/180 0.01/plant.dt pi/180/plan
 add_noise = true;
 % add_noise_to_theta = false;
 
-T = series_length + burn_in;
+T = series_length + discard_first_n_steps;
 max_force = 5;
 x0 = [0,0,0,0];
 
@@ -24,7 +24,7 @@ y_noiseless = cell(1,N);
 y = cell(1,N);
 
 for n=1:N
-    n
+%     n
     u{n} = 2*max_force*(rand(T-1,1)-0.5);
     
     y_n = zeros(T,4);
@@ -41,7 +41,7 @@ for n=1:N
     y_n(:,5) = cos(y_n(:,2));
     y_n(:,2) = sin(y_n(:,2));
     y_n = y_n(:,[1,2,5,3,4]); 
-    y_n = y_n(burn_in+1:end,:);
+    y_n = y_n(discard_first_n_steps+1:end,:);
     y_noiseless{n} = y_n;
     if add_noise
         y{n} = y_n + bsxfun(@times, randn(size(y_n)), obs_noise_std);

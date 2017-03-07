@@ -1,7 +1,7 @@
 %% Data for plotting
 
 %clear 
-rng(1)
+rng(10)
 
 addpath('../')
 addpath('../../../base')
