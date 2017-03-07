@@ -28,9 +28,9 @@ for noise_multiplier = noise_levels
         stacked_y = [stacked_y; data(n).y(2:end,  :)];
     end
     
-    assert(length(stacked_x) == length(stacked_x))
+    assert(size(stacked_x,1) == size(stacked_x,1))
 
-    train_test_cutoff = ceil(length(stacked_x)/2);
+    train_test_cutoff = ceil(size(stacked_x,1)/2);
     
     train_x = stacked_x(1:train_test_cutoff,:);
     train_y = stacked_y(1:train_test_cutoff,:);
