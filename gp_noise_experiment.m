@@ -1,12 +1,14 @@
 addpath(genpath('/home/adi24/gpml-matlab-v4.0-2016-10-19'))           
 
+random_seed = 1;
 series = 20;
 series_length = 100;
 discard_first_n_steps = 0;
+noise_std_multipliers = [0 0.1 1 2 3 5 10 20 50];
 
 %% Generate (noiseless) data:
 
-rng(1)
+rng(random_seed)
 clear odestep
 [data, ~, ~, plant] = return_cartpole_data(series, series_length, discard_first_n_steps, 0);
    
@@ -47,8 +49,6 @@ test_y_noiseless = stacked_y(train_test_cutoff+1:end,:);
 % Dimensions: x position, sin(\theta), cos(\theta), cart velocity, angular velocity
 obs_noise_stds = [0.01 pi/180 pi/180 0.01/plant.dt pi/180/plant.dt]; % add noise to sin & cos independently
 
-noise_std_multipliers = [0 0.1 1 2 3 5 10 20 50];
-
 for noise_std_multiplier = noise_std_multipliers
     noise_std_multiplier
     
@@ -56,6 +56,7 @@ for noise_std_multiplier = noise_std_multipliers
     stacked_x_noisy = stacked_x;
     stacked_y_noisy = stacked_y;
     
+    rng(random_seed)
     x_additive_noise = bsxfun(@times, randn(size(stacked_y)), noise_std_multiplier*obs_noise_stds);
     y_additive_noise = bsxfun(@times, randn(size(stacked_y)), noise_std_multiplier*obs_noise_stds);
     stacked_x_noisy(:,1:end-2) = stacked_x_noisy(:,1:end-2) + x_additive_noise;
