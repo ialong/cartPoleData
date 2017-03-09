@@ -15,7 +15,6 @@ stacked_x = [];
 stacked_y = [];
 boundaries = zeros(series,1);
 for n = 1:series
-    data(n).y(:,1) = data(n).y(:,1) - data(n).y(1,1);
     pos_less_than_one = abs(data(n).y(:,1)) > 1;
     pos_less_than_one = find(pos_less_than_one, 1, 'first') - 1;
     if isempty(pos_less_than_one); pos_less_than_one = series_length; end

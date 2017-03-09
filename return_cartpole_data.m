@@ -12,7 +12,6 @@ plant.ode = @dynamics;
 % Noise s.d.'s: 1cm, 1 degree
 % Dimensions: x position, sin(\theta), cos(\theta), cart velocity, angular velocity
 obs_noise_stds = noise_std_multiplier * [0.01 pi/180 pi/180 0.01/plant.dt pi/180/plant.dt]; % add noise to sin & cos independently
-add_noise = true;
 
 T = series_length + discard_first_n_steps;
 max_force = 5;
@@ -40,11 +39,7 @@ for n=1:N
     y_n = y_n(:,[1,2,5,3,4]); 
     y_n = y_n(discard_first_n_steps+1:end,:);
     y_noiseless{n} = y_n;
-    if add_noise
-        y{n} = y_n + bsxfun(@times, randn(size(y_n)), obs_noise_stds);
-    else
-        y{n} = y_noiseless{n};
-    end
+    y{n} = y_n + bsxfun(@times, randn(size(y_n)), obs_noise_stds);
 end
 
 y_position_angle = cellfun(@(x)({x(:,1:3)}),y);
