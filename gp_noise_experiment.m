@@ -1,4 +1,4 @@
-addpath(genpath('/home/adi24/gpml-matlab-v4.0-2016-10-19'))           
+addpath(genpath('~/gpml-matlab-v4.0-2016-10-19'))           
 
 random_seed = 1;
 series = 20;
