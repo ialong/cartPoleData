@@ -23,11 +23,10 @@ for n = 1:series
     boundaries(n) = pos_less_than_one;
     data(n).y = data(n).y(1:pos_less_than_one,:);
 
-    data(n).u = [0; data(n).u];
-    data(n).u = data(n).u(1:pos_less_than_one,:);
+    data(n).u = data(n).u(1:pos_less_than_one - 1,:);
 
     % stack data all together:
-    x_and_u = [data(n).y(1:end-1,:)   data(n).u(1:end-1)   data(n).u(2:end)];
+    x_and_u = [data(n).y(1:end-1,:)   data(n).u];
     stacked_x = [stacked_x; x_and_u];
     stacked_y = [stacked_y; data(n).y(2:end,:)];
 end

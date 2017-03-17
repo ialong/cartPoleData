@@ -33,11 +33,17 @@ for n=1:N
         y_n(count,:) = odestep(y_n(count-1,:), f, plant);
         count = count + 1;
     end
+    
+    if plant.delay > 0
+        u{n} = [[0; u{n}(1:end-1)] u{n}]; % also stack u_{t-1} if delayed control
+    end
 
     y_n(:,5) = cos(y_n(:,2));
     y_n(:,2) = sin(y_n(:,2));
     y_n = y_n(:,[1,2,5,3,4]); 
+    
     y_n = y_n(discard_first_n_steps+1:end,:);
+    
     y_noiseless{n} = y_n;
     y{n} = y_n + bsxfun(@times, randn(size(y_n)), obs_noise_stds);
 end
