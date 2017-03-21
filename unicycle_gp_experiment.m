@@ -3,6 +3,9 @@ addpath(genpath('~/gpml-matlab-v4.0-2016-10-19'))
 random_seed = 1;
 noise_std_multipliers = [0 0.1 1 2 3 5 10 20 50];
 
+dt = 0.05;
+unicycle.l = 0.222/(2*pi) + 0.08 + 0.007;
+
 %% Generate (noiseless) data:
 
 load uni_data.mat
@@ -40,7 +43,9 @@ test_y_noiseless = stacked_y(train_test_cutoff+1:end,:);
 
 % Noise s.d.'s: 1cm, 1 degree
 % Dimensions: x position, sin(\theta), cos(\theta), cart velocity, angular velocity
-#obs_noise_stds = [0.01 pi/180 pi/180 0.01/plant.dt pi/180/plant.dt]; % add noise to sin & cos independently
+obs_noise_stds = [(deg2rad(1)/dt) * ones(1,5)...
+                    (0.01*unicycle.l) * ones(1,2)...
+                    deg2rad(1) * ones(1,3)];
 
 for noise_std_multiplier = noise_std_multipliers
     noise_std_multiplier
