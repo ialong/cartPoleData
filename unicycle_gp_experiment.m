@@ -1,7 +1,7 @@
 addpath(genpath('~/gpml-matlab-v4.0-2016-10-19'))           
 
 random_seed = 1;
-noise_std_multipliers = [0 0.1 0.5 1 2 3 5 10 20];
+noise_std_multipliers = [0 0.1 sqrt(0.1) 0.5 1 2 3 5 10 20];
 in_dim = 10;
 u_dim = 2;
 
@@ -28,7 +28,7 @@ end
 boundaries = cumsum(boundaries);
 
 % split beteern train and test:
-train_test_cutoff = 272;%ceil(size(stacked_x,1)/2);
+train_test_cutoff = 800;%ceil(size(stacked_x,1)/2);
 
 train_x_noiseless = stacked_x(1:train_test_cutoff,:);
 train_y_noiseless = stacked_y(1:train_test_cutoff,:);
