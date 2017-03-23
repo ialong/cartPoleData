@@ -1,7 +1,7 @@
 close all
 data_type = 'unicycle';
 
-load(['results_' data_type '/noise_level_0.mat'])
+load(['results_' data_type '/noise_level_1.mat'])
 
 if strcmp(data_type,'unicycle')
     y_labels = {'droll','dyaw','dwheel','dpitch','dflywheel',...
@@ -25,9 +25,9 @@ for out_dim = 1:out_dims
     legend('2\sigma CI', 'prediction','input','noisy target','noiseless target')
     xlabel('test point #')
     
-    fit_noise_levels
-    true_noise_levels
-    sqrt2_inflated_true_noise_levels
-    sqrt3_inflated_true_noise_levels
-    
 end
+
+fit_noise_levels
+true_noise_levels
+sqrt2_inflated_true_noise_levels
+sqrt3_inflated_true_noise_levels
